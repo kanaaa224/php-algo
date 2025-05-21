@@ -23,3 +23,47 @@ body {
        -moz-user-select: none;
             user-select: none;
 }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.algo-game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+
+        /*background-color: #eee;*/
+
+        .lane {
+            display: flex;
+
+            .card {
+                width: 4rem;
+                height: 5rem;
+
+                margin: 0.5rem;
+
+                background-color: #eee;
+
+                border-radius: 0.25rem;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .card.clickable:hover {
+                opacity: 0.75;
+
+                cursor: pointer;
+            }
+
+            .card.clickable:active {
+                opacity: 0.5;
+            }
+        }
+    }
+}

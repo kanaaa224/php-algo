@@ -65,12 +65,9 @@ const app = createApp({
                 html += `<div class="lane">`;
 
                 for(let j = 0; j < this.game.panel[i].length; j++) {
-                    switch(this.game.panel[i][j]) {
-                        case 0: {
-                            html += `<div class="card"></div>`;
-                            break;
-                        }
-                    }
+                    let card = this.game.panel[i][j];
+
+                    html += `<div class="card clickable"></div>`;//html += `<div class="card${!card.num ? ' clickable' : ''}"${!card.num ? ` style="background-color: ${card.color == 'white' ? '#fff' : '#222'}; color: ${card.color == 'white' ? '#000' : '#fff'};"` : ''}>${card.num}</div>`;
                 }
 
                 html += `</div>`;
@@ -92,7 +89,10 @@ const app = createApp({
                 this.game.panel[i] = [];
 
                 for(let j = 0; j < 5; j++) {
-                    this.game.panel[i][j] = 0;
+                    this.game.panel[i][j] = {
+                        num: 1,
+                        color: 'black'
+                    };
                 }
             }
 
