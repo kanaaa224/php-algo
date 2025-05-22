@@ -33,9 +33,108 @@
         <main>
             <div class="container" id="app">
                 <v-app>
+                    <v-snackbar
+                        v-model="snackbar_visible"
+                        :timeout="snackbar_time"
+                        :color="snackbar_color"
+                    >
+                        {{ snackbar_message }}
+                    </v-snackbar>
+                    <v-dialog
+                        v-model="dialog_1_visible"
+                        width="auto"
+                        persistent
+                    >
+                        <v-card
+                            max-width="500"
+                            prepend-icon="mdi-cards-playing"
+                            title="ALGO ゲーム へようこそ！"
+                        >
+                            <v-card-text>
+                                このアプリは PHP + MySQL の知識を深める目的で制作した ALGO カードゲーム です。<br><br>
+                                特徴と機能:<br>
+                                ・モダンUI（ダークモード対応など）<br>
+                                ・ゲーム進捗の同期<br>
+                                ・ゲーム進捗の保存<br>
+                                <!-- ・マルチプレイ<br> -->
+                                ・オフラインプレイ<br><br>
+                                <span class="text-center d-block" style="opacity: 0.75;">Copyright ©︎ 2025 <a href="//github.com/kanaaa224/" target="_blank">kanaaa224</a>.</span>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn
+                                    class="ms-auto"
+                                    text="OK"
+                                    @click="dialog_1()"
+                                ></v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                    <v-dialog
+                        v-model="dialog_2_visible"
+                        width="auto"
+                        persistent
+                    >
+                        <v-card
+                            max-width="400"
+                            prepend-icon="mdi-play"
+                            title="プレイモードを選択"
+                        >
+                            <v-card-text>
+                                <v-radio-group
+                                    v-model="dialog_2_radio"
+                                    :messages="dialog_2_radio ? 'モードが選択されました' : 'モードを選択してください'"
+                                >
+                                    <v-radio
+                                        label="シングルプレイ"
+                                        value="single"
+                                    ></v-radio>
+                                    <!-- <v-radio
+                                        label="マルチプレイ"
+                                        value="multiplayer"
+                                    ></v-radio> -->
+                                    <v-radio
+                                        label="オフラインプレイ（APIに接続しない）"
+                                        value="offline"
+                                    ></v-radio>
+                                </v-radio-group>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn
+                                    class="ms-auto"
+                                    variant="tonal"
+                                    text="スタート"
+                                    color="primary"
+                                    @click="dialog_2()"
+                                ></v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                     <v-main>
                         <v-container>
-                            <div class="algo-game"></div>
+                            <div class="algo-game">
+                                <div class="container">
+                                    <div
+                                        class="lane"
+                                        v-for="j in game.cards_size.y"
+                                        :key="'col-' + j"
+                                    >
+                                        <div
+                                            class="card clickable"
+                                            v-for="i in game.cards_size.x"
+                                            :key="'row-' + i"
+                                            :style="game.cards[i - 1][j - 1].num !== 0 ? {
+                                                backgroundColor: game.cards[i - 1][j - 1].color === 'white' ? 'white' : '#111',
+                                                color:           game.cards[i - 1][j - 1].color === 'white' ? 'black' : 'white'
+                                            } : {}"
+                                            @click="placing_card(i - 1, j - 1)"
+                                        >
+                                            <span v-if="game.cards[i - 1][j - 1].num !== 0">
+                                                {{ game.cards[i - 1][j - 1].num }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </v-container>
                     </v-main>
                 </v-app>

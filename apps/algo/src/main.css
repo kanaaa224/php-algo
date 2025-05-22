@@ -46,13 +46,19 @@ body {
 
                 margin: 0.5rem;
 
-                background-color: #eee;
+                background-color: #ddd;
 
                 border-radius: 0.25rem;
 
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+                box-shadow: 0 0 3rem 0 #0000001a;
+
+                span {
+                    font-size: 1.25rem;
+                }
             }
 
             .card.clickable:hover {
